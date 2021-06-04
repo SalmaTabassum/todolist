@@ -20086,8 +20086,11 @@ var completedArr = new Array(); //stores completed todos to be displayed at bott
 function addTodo(event) {
   event.preventDefault(); //prevent browser refresh
 
-  if (todoInput.value == "" || todoInput.value == " ") {
-    //error handling for blank todo inputs
+  var stringBlank = todoInput.value.split(" ").join("");
+  console.log(stringBlank);
+
+  if (stringBlank === "") {
+    //error handling for blank or space-only todo inputs
     alert("Invalid entry, please try again");
     dateInput.value = "";
     todoInput.value = "";
