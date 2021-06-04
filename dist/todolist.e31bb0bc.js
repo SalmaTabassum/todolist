@@ -20153,10 +20153,10 @@ function addTodo(event) {
     completedButton.classList.add("complete-btn");
     todoDiv.appendChild(completedButton); //adds check button into todo object
 
-    var trashButton = document.createElement('button');
-    trashButton.innerText = 'Delete';
-    trashButton.classList.add("trash-btn");
-    todoDiv.appendChild(trashButton); //adds delete button into todo object
+    var deleteButton = document.createElement('button');
+    deleteButton.innerText = 'Delete';
+    deleteButton.classList.add("delete-btn");
+    todoDiv.appendChild(deleteButton); //adds delete button into todo object
 
     todoList.appendChild(todoDiv); //adds the todo object as a whole to the todo list
   }
@@ -20208,13 +20208,13 @@ function addTodo(event) {
     _todoDiv.appendChild(_completedButton); //adds check button into todo object
 
 
-    var _trashButton = document.createElement('button');
+    var _deleteButton = document.createElement('button');
 
-    _trashButton.innerText = 'Delete';
+    _deleteButton.innerText = 'Delete';
 
-    _trashButton.classList.add("trash-btn");
+    _deleteButton.classList.add("delete-btn");
 
-    _todoDiv.appendChild(_trashButton); //adds delete button into todo object
+    _todoDiv.appendChild(_deleteButton); //adds delete button into todo object
 
 
     todoList.appendChild(_todoDiv); //adds the todo object as a whole to the todo list
@@ -20228,7 +20228,7 @@ function addTodo(event) {
 function deleteCheck(event) {
   var item = event.target;
 
-  if (item.classList[0] === 'trash-btn') {
+  if (item.classList[0] === 'delete-btn') {
     var todoToRemove = item.parentElement;
 
     if (todoToRemove.classList[1] === "completed") {
@@ -20247,9 +20247,6 @@ function deleteCheck(event) {
     }
 
     todoToRemove.remove(); //remove the todo item from the todo list itself
-
-    console.log("after deletion");
-    console.log(completedArr);
   }
 
   if (item.classList[0] === 'complete-btn') {
@@ -20268,17 +20265,9 @@ function deleteCheck(event) {
 
     var iterArr = todoToCheck.parentElement.getElementsByClassName('todo');
     completedArr = [];
-    console.log("iterArr");
-
-    for (var i = 0; i < iterArr.length; i++) {
-      console.log(iterArr[i].getElementsByClassName('date-hold')[0].value);
-    }
-
-    console.log("completedArr");
 
     for (var i = 0; i < iterArr.length; i++) {
       if (iterArr[i].classList[1] === "completed") {
-        console.log(iterArr[i].getElementsByClassName('date-hold')[0].value);
         completedArr.push({
           name: iterArr[i].getElementsByClassName('todo-item')[0].innerText,
           date: (0, _dateFns.parseISO)(iterArr[i].getElementsByClassName('date-hold')[0].value),
@@ -20286,8 +20275,6 @@ function deleteCheck(event) {
         });
       }
     }
-
-    console.log(completedArr);
   }
 }
 },{"date-fns":"node_modules/date-fns/esm/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

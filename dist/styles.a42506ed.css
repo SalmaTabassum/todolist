@@ -72,7 +72,7 @@ form button{
     margin-left: 40px;
 }
 
-.trash-btn, .complete-btn{
+.delete-btn, .complete-btn{
     cursor: pointer;
 }
 

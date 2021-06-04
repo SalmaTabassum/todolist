@@ -76,10 +76,10 @@ function addTodo(event){
         completedButton.classList.add("complete-btn");
         todoDiv.appendChild(completedButton);   //adds check button into todo object
 
-        const trashButton = document.createElement('button');
-        trashButton.innerText = 'Delete';
-        trashButton.classList.add("trash-btn");
-        todoDiv.appendChild(trashButton);       //adds delete button into todo object
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        deleteButton.classList.add("delete-btn");
+        todoDiv.appendChild(deleteButton);       //adds delete button into todo object
 
         todoList.appendChild(todoDiv);          //adds the todo object as a whole to the todo list
     }
@@ -111,10 +111,10 @@ function addTodo(event){
         completedButton.classList.add("complete-btn");
         todoDiv.appendChild(completedButton);   //adds check button into todo object
 
-        const trashButton = document.createElement('button');
-        trashButton.innerText = 'Delete';
-        trashButton.classList.add("trash-btn");
-        todoDiv.appendChild(trashButton);       //adds delete button into todo object
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        deleteButton.classList.add("delete-btn");
+        todoDiv.appendChild(deleteButton);       //adds delete button into todo object
 
         todoList.appendChild(todoDiv);          //adds the todo object as a whole to the todo list
 
@@ -127,7 +127,7 @@ function addTodo(event){
 function deleteCheck(event){
     const item = event.target;
 
-    if(item.classList[0] === 'trash-btn'){
+    if(item.classList[0] === 'delete-btn'){
         const todoToRemove = item.parentElement;
         if(todoToRemove.classList[1] === "completed"){
             for(var i = completedArr.length - 1; i >= 0; i--){
@@ -144,8 +144,6 @@ function deleteCheck(event){
             }       //remove the deleted todo from the sorted list (so it doesn't get re-inputted again)
         }
         todoToRemove.remove();      //remove the todo item from the todo list itself
-        console.log("after deletion");
-        console.log(completedArr);
     }
 
     if(item.classList[0] === 'complete-btn') {
@@ -161,19 +159,13 @@ function deleteCheck(event){
 
         var iterArr = todoToCheck.parentElement.getElementsByClassName('todo');
         completedArr = [];
-        console.log("iterArr");
-        for(var i = 0; i < iterArr.length; i++){
-            console.log(iterArr[i].getElementsByClassName('date-hold')[0].value);
-        }
-        console.log("completedArr");
+
         for(var i = 0; i < iterArr.length; i++){
             if(iterArr[i].classList[1] === "completed"){
-                console.log(iterArr[i].getElementsByClassName('date-hold')[0].value);
                 completedArr.push({name: iterArr[i].getElementsByClassName('todo-item')[0].innerText,
                 date: parseISO(iterArr[i].getElementsByClassName('date-hold')[0].value),
                 dateOriginal: iterArr[i].getElementsByClassName('date-hold')[0].value});
             }
         }
-        console.log(completedArr);
     }
 }
