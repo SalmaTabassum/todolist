@@ -129,12 +129,12 @@ function deleteCheck(event){
 
     if(item.classList[0] === 'delete-btn'){
         const todoToRemove = item.parentElement;
-        if(todoToRemove.classList[1] === "completed"){
+        if(todoToRemove.classList[1] === "completed"){      //check if item is in completedArr or sortedList
             for(var i = completedArr.length - 1; i >= 0; i--){
                 if(todoToRemove.getElementsByClassName('todo-item')[0].innerText === completedArr[i].name){
                     completedArr.splice(i, 1);
                 }
-            }
+            }       //delete item from completedArr to prevent it from being entered back into the todo list
         }
         else{
             for(var i = sortList.length - 1; i >= 0; i--){
@@ -158,7 +158,8 @@ function deleteCheck(event){
                                                     // as crossed out and grayed out using CSS
 
         var iterArr = todoToCheck.parentElement.getElementsByClassName('todo');
-        completedArr = [];
+        completedArr = [];      // empty out completedArr, necessary since some items may have
+                                // toggled their class name out of "completed"
 
         for(var i = 0; i < iterArr.length; i++){
             if(iterArr[i].classList[1] === "completed"){
@@ -166,6 +167,6 @@ function deleteCheck(event){
                 date: parseISO(iterArr[i].getElementsByClassName('date-hold')[0].value),
                 dateOriginal: iterArr[i].getElementsByClassName('date-hold')[0].value});
             }
-        }
+        }       //push all items with class name "completed" to completeArr
     }
 }
