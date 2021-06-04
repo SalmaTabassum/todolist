@@ -20143,7 +20143,9 @@ function addTodo(event) {
     dateHold.setAttribute("class", "date-hold");
     dateHold.setAttribute("name", "date-hold");
     dateHold.setAttribute("value", sortList[i].dateOriginal);
-    todoDiv.appendChild(dateHold);
+    todoDiv.appendChild(dateHold); //hidden element to hold original date
+    //value (needed for completeArr)
+
     var dueDate = document.createElement('div');
     dueDate.innerHTML = '<b>Due Date:</b> ' + (0, _dateFns.format)(sortList[i].date, 'MM/dd/yyyy') + '<span class="tab"></span>';
     dueDate.classList.add("due-date");
@@ -20189,7 +20191,9 @@ function addTodo(event) {
 
     _dateHold.setAttribute("value", completedArr[i].dateOriginal);
 
-    _todoDiv.appendChild(_dateHold);
+    _todoDiv.appendChild(_dateHold); //hidden element to hold original date
+    //value (needed for completeArr)
+
 
     var _dueDate = document.createElement('div');
 
@@ -20319,7 +20323,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62209" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64484" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

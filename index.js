@@ -66,7 +66,8 @@ function addTodo(event){
         dateHold.setAttribute("class", "date-hold");
         dateHold.setAttribute("name", "date-hold");
         dateHold.setAttribute("value", sortList[i].dateOriginal);
-        todoDiv.appendChild(dateHold);
+        todoDiv.appendChild(dateHold);      //hidden element to hold original date
+                                            //value (needed for completeArr)
 
         const dueDate = document.createElement('div');
         dueDate.innerHTML = '<b>Due Date:</b> ' + format(sortList[i].date,'MM/dd/yyyy')
@@ -101,7 +102,8 @@ function addTodo(event){
         dateHold.setAttribute("class", "date-hold");
         dateHold.setAttribute("name", "date-hold");
         dateHold.setAttribute("value", completedArr[i].dateOriginal);
-        todoDiv.appendChild(dateHold);
+        todoDiv.appendChild(dateHold);      //hidden element to hold original date
+                                            //value (needed for completeArr)
 
         const dueDate = document.createElement('div');
         dueDate.innerHTML = '<b>Due Date:</b> ' + format(parseISO(completedArr[i].dateOriginal),'MM/dd/yyyy')

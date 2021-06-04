@@ -11,12 +11,13 @@ body {
 }
 
 header {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 }
 
 header,
+h3,
 form {
-    min-height: 5vh;
+    min-height: 4vh;
     display: flex;
     justify-content: center;
     align-content: center;
