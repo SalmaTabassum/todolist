@@ -20230,44 +20230,16 @@ function deleteCheck(event) {
 
   if (item.classList[0] === 'delete-btn') {
     var todoToRemove = item.parentElement;
-
-    if (todoToRemove.classList[1] === "completed") {
-      //check if item is in completedArr or sortedList
-      for (var i = completedArr.length - 1; i >= 0; i--) {
-        if (todoToRemove.getElementsByClassName('todo-item')[0].innerText === completedArr[i].name) {
-          completedArr.splice(i, 1);
-        }
-      } //delete item from completedArr to prevent it from being entered back into the todo list
-
-    } else {
-      for (var i = sortList.length - 1; i >= 0; i--) {
-        if (todoToRemove.getElementsByClassName('todo-item')[0].innerText === sortList[i].name) {
-          sortList.splice(i, 1);
-        }
-      } //remove the deleted todo from the sorted list (so it doesn't get re-inputted again)
-
-    }
+    var todoGrandparent = todoToRemove.parentElement; //preserve parent element of to-be-deleted todo
 
     todoToRemove.remove(); //remove the todo item from the todo list itself
-  }
 
-  if (item.classList[0] === 'complete-btn') {
-    var todoToCheck = item.parentElement;
+    var iterArr = todoGrandparent.getElementsByClassName('todo'); //get all todos in iterArr
 
-    for (var i = sortList.length - 1; i >= 0; i--) {
-      if (todoToCheck.getElementsByClassName('todo-item')[0].innerText === sortList[i].name) {
-        sortList.splice(i, 1);
-      }
-    } //remove the checked todo from the sorted list (so it doesn't get re-inputted again
-    //as a normal todo)
-
-
-    todoToCheck.classList.toggle("completed"); //change the class name so the todo can be displayed
-    // as crossed out and grayed out using CSS
-
-    var iterArr = todoToCheck.parentElement.getElementsByClassName('todo');
     completedArr = []; // empty out completedArr, necessary since some items may have
     // toggled their class name out of "completed"
+
+    sortList = []; // empty out sortedList for same reason
 
     for (var i = 0; i < iterArr.length; i++) {
       if (iterArr[i].classList[1] === "completed") {
@@ -20276,9 +20248,46 @@ function deleteCheck(event) {
           date: (0, _dateFns.parseISO)(iterArr[i].getElementsByClassName('date-hold')[0].value),
           dateOriginal: iterArr[i].getElementsByClassName('date-hold')[0].value
         });
-      }
-    } //push all items with class name "completed" to completeArr
+      } //push all items with class name "completed" to completeArr
+      else {
+          sortList.push({
+            name: iterArr[i].getElementsByClassName('todo-item')[0].innerText,
+            date: (0, _dateFns.parseISO)(iterArr[i].getElementsByClassName('date-hold')[0].value),
+            dateOriginal: iterArr[i].getElementsByClassName('date-hold')[0].value
+          });
+        } //push all other items to sortedList
 
+    }
+  }
+
+  if (item.classList[0] === 'complete-btn') {
+    var todoToCheck = item.parentElement;
+    todoToCheck.classList.toggle("completed"); //change the class name so the todo can be displayed
+    // as crossed out and grayed out using CSS
+
+    var iterArr = todoToCheck.parentElement.getElementsByClassName('todo');
+    completedArr = []; // empty out completedArr, necessary since some items may have
+    // toggled their class name out of "completed"
+
+    sortList = []; // empty out sortedList for same reason
+
+    for (var i = 0; i < iterArr.length; i++) {
+      if (iterArr[i].classList[1] === "completed") {
+        completedArr.push({
+          name: iterArr[i].getElementsByClassName('todo-item')[0].innerText,
+          date: (0, _dateFns.parseISO)(iterArr[i].getElementsByClassName('date-hold')[0].value),
+          dateOriginal: iterArr[i].getElementsByClassName('date-hold')[0].value
+        });
+      } //push all items with class name "completed" to completeArr
+      else {
+          sortList.push({
+            name: iterArr[i].getElementsByClassName('todo-item')[0].innerText,
+            date: (0, _dateFns.parseISO)(iterArr[i].getElementsByClassName('date-hold')[0].value),
+            dateOriginal: iterArr[i].getElementsByClassName('date-hold')[0].value
+          });
+        } //push all other items to sortedList
+
+    }
   }
 }
 },{"date-fns":"node_modules/date-fns/esm/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
