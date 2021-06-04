@@ -20101,6 +20101,13 @@ function addTodo(event) {
     return;
   }
 
+  if (!(0, _dateFns.parseISO)(dateInput.value).getTime() > 0) {
+    //error handling for out of range date input
+    alert("Please enter a valid due date");
+    dateInput.value = "";
+    return;
+  }
+
   sortList.push({
     name: todoInput.value,
     date: (0, _dateFns.parseISO)(dateInput.value),
@@ -20179,15 +20186,13 @@ function addTodo(event) {
 
     _dateHold.setAttribute("name", "date-hold");
 
-    _dateHold.setAttribute("value", completedArr[i].date);
+    _dateHold.setAttribute("value", completedArr[i].dateOriginal);
 
     _todoDiv.appendChild(_dateHold);
 
-    console.log(completedArr[i].date);
-
     var _dueDate = document.createElement('div');
 
-    _dueDate.innerHTML = '<b>Due Date:</b> ' + (0, _dateFns.format)(completedArr[i].date, 'MM/dd/yyyy') + '<span class="tab"></span>';
+    _dueDate.innerHTML = '<b>Due Date:</b> ' + (0, _dateFns.format)((0, _dateFns.parseISO)(completedArr[i].dateOriginal), 'MM/dd/yyyy') + '<span class="tab"></span>';
 
     _dueDate.classList.add("due-date");
 
@@ -20229,7 +20234,7 @@ function deleteCheck(event) {
     if (todoToRemove.classList[1] === "completed") {
       for (var i = completedArr.length - 1; i >= 0; i--) {
         if (todoToRemove.getElementsByClassName('todo-item')[0].innerText === completedArr[i].name) {
-          sortList.splice(i, 1);
+          completedArr.splice(i, 1);
         }
       }
     } else {
@@ -20242,6 +20247,9 @@ function deleteCheck(event) {
     }
 
     todoToRemove.remove(); //remove the todo item from the todo list itself
+
+    console.log("after deletion");
+    console.log(completedArr);
   }
 
   if (item.classList[0] === 'complete-btn') {
@@ -20260,15 +20268,26 @@ function deleteCheck(event) {
 
     var iterArr = todoToCheck.parentElement.getElementsByClassName('todo');
     completedArr = [];
+    console.log("iterArr");
+
+    for (var i = 0; i < iterArr.length; i++) {
+      console.log(iterArr[i].getElementsByClassName('date-hold')[0].value);
+    }
+
+    console.log("completedArr");
 
     for (var i = 0; i < iterArr.length; i++) {
       if (iterArr[i].classList[1] === "completed") {
+        console.log(iterArr[i].getElementsByClassName('date-hold')[0].value);
         completedArr.push({
           name: iterArr[i].getElementsByClassName('todo-item')[0].innerText,
-          date: (0, _dateFns.parseISO)(iterArr[i].getElementsByClassName('date-hold')[0].value)
+          date: (0, _dateFns.parseISO)(iterArr[i].getElementsByClassName('date-hold')[0].value),
+          dateOriginal: iterArr[i].getElementsByClassName('date-hold')[0].value
         });
       }
     }
+
+    console.log(completedArr);
   }
 }
 },{"date-fns":"node_modules/date-fns/esm/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

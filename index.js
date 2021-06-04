@@ -26,6 +26,12 @@ function addTodo(event){
         return;
     }
 
+    if((!(parseISO(dateInput.value)).getTime() > 0)){   //error handling for out of range date input
+        alert("Please enter a valid due date");
+        dateInput.value = "";
+        return;
+    }
+
     sortList.push({name: todoInput.value, date: parseISO(dateInput.value),
     dateOriginal: dateInput.value});
     //push dates (properly formatted) into an array of structs
@@ -91,13 +97,11 @@ function addTodo(event){
         dateHold.setAttribute("type", "hidden");
         dateHold.setAttribute("class", "date-hold");
         dateHold.setAttribute("name", "date-hold");
-        dateHold.setAttribute("value", completedArr[i].date);
+        dateHold.setAttribute("value", completedArr[i].dateOriginal);
         todoDiv.appendChild(dateHold);
 
-        console.log(completedArr[i].date);
-
         const dueDate = document.createElement('div');
-        dueDate.innerHTML = '<b>Due Date:</b> ' + format(completedArr[i].date,'MM/dd/yyyy')
+        dueDate.innerHTML = '<b>Due Date:</b> ' + format(parseISO(completedArr[i].dateOriginal),'MM/dd/yyyy')
         + '<span class="tab"></span>';
         dueDate.classList.add("due-date");
         todoDiv.appendChild(dueDate);       //adds due date into todo object
@@ -128,7 +132,7 @@ function deleteCheck(event){
         if(todoToRemove.classList[1] === "completed"){
             for(var i = completedArr.length - 1; i >= 0; i--){
                 if(todoToRemove.getElementsByClassName('todo-item')[0].innerText === completedArr[i].name){
-                    sortList.splice(i, 1);
+                    completedArr.splice(i, 1);
                 }
             }
         }
@@ -140,6 +144,8 @@ function deleteCheck(event){
             }       //remove the deleted todo from the sorted list (so it doesn't get re-inputted again)
         }
         todoToRemove.remove();      //remove the todo item from the todo list itself
+        console.log("after deletion");
+        console.log(completedArr);
     }
 
     if(item.classList[0] === 'complete-btn') {
@@ -155,11 +161,19 @@ function deleteCheck(event){
 
         var iterArr = todoToCheck.parentElement.getElementsByClassName('todo');
         completedArr = [];
+        console.log("iterArr");
+        for(var i = 0; i < iterArr.length; i++){
+            console.log(iterArr[i].getElementsByClassName('date-hold')[0].value);
+        }
+        console.log("completedArr");
         for(var i = 0; i < iterArr.length; i++){
             if(iterArr[i].classList[1] === "completed"){
+                console.log(iterArr[i].getElementsByClassName('date-hold')[0].value);
                 completedArr.push({name: iterArr[i].getElementsByClassName('todo-item')[0].innerText,
-                date: parseISO(iterArr[i].getElementsByClassName('date-hold')[0].value)});
+                date: parseISO(iterArr[i].getElementsByClassName('date-hold')[0].value),
+                dateOriginal: iterArr[i].getElementsByClassName('date-hold')[0].value});
             }
         }
+        console.log(completedArr);
     }
 }
