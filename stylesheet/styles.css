@@ -32,7 +32,7 @@ form button{
     cursor: pointer;
 }
 
-.todo-container {
+.todo-space {
     display: flex;
     justify-content: center;
     align-items: center;

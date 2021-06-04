@@ -20115,6 +20115,10 @@ function addTodo(event) {
     dateOriginal: dateInput.value
   }); //push dates (properly formatted) into an array of structs
 
+  constructList(); //send to function to create todo list
+}
+
+function constructList() {
   sortList.sort(function (a, b) {
     //sort the array of structs by date ascending
     var dateA = a.date;
@@ -20147,7 +20151,9 @@ function addTodo(event) {
     //value (needed for completeArr)
 
     var dueDate = document.createElement('div');
-    dueDate.innerHTML = '<b>Due Date:</b> ' + (0, _dateFns.format)(sortList[i].date, 'MM/dd/yyyy') + '<span class="tab"></span>';
+    console.log("sortList");
+    console.log(sortList[i].dateOriginal);
+    dueDate.innerHTML = '<b>Due Date:</b> ' + (0, _dateFns.format)((0, _dateFns.parseISO)(sortList[i].dateOriginal), 'MM/dd/yyyy') + '<span class="tab"></span>';
     dueDate.classList.add("due-date");
     todoDiv.appendChild(dueDate); //adds due date into todo object
 
@@ -20234,6 +20240,7 @@ function deleteCheck(event) {
   var item = event.target;
 
   if (item.classList[0] === 'delete-btn') {
+    //if delete button is clicked
     var todoToRemove = item.parentElement;
     var todoGrandparent = todoToRemove.parentElement; //preserve parent element of to-be-deleted todo
 
@@ -20266,6 +20273,7 @@ function deleteCheck(event) {
   }
 
   if (item.classList[0] === 'complete-btn') {
+    //if check button is clicked
     var todoToCheck = item.parentElement;
     todoToCheck.classList.toggle("completed"); //change the class name so the todo can be displayed
     // as crossed out and grayed out using CSS
@@ -20277,7 +20285,7 @@ function deleteCheck(event) {
     sortList = []; // empty out sortedList for same reason
 
     for (var i = 0; i < iterArr.length; i++) {
-      if (iterArr[i].classList[1] === "completed") {
+      if (iterArr[i].classList.contains("completed")) {
         completedArr.push({
           name: iterArr[i].getElementsByClassName('todo-item')[0].innerText,
           date: (0, _dateFns.parseISO)(iterArr[i].getElementsByClassName('date-hold')[0].value),
@@ -20293,6 +20301,8 @@ function deleteCheck(event) {
         } //push all other items to sortedList
 
     }
+
+    constructList(); //re-sort the todo list
   }
 }
 },{"date-fns":"node_modules/date-fns/esm/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

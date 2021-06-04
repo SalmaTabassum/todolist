@@ -34,10 +34,16 @@ function addTodo(event){
         dateInput.value = "";
         return;
     }
-
     sortList.push({name: todoInput.value, date: parseISO(dateInput.value),
     dateOriginal: dateInput.value});
     //push dates (properly formatted) into an array of structs
+
+    constructList();        //send to function to create todo list
+
+}
+
+function constructList(){
+
     sortList.sort(function(a,b){    //sort the array of structs by date ascending
         const dateA = a.date;
         const dateB = b.date;
@@ -70,7 +76,9 @@ function addTodo(event){
                                             //value (needed for completeArr)
 
         const dueDate = document.createElement('div');
-        dueDate.innerHTML = '<b>Due Date:</b> ' + format(sortList[i].date,'MM/dd/yyyy')
+        console.log("sortList");
+        console.log(sortList[i].dateOriginal);
+        dueDate.innerHTML = '<b>Due Date:</b> ' + format(parseISO(sortList[i].dateOriginal),'MM/dd/yyyy')
         + '<span class="tab"></span>';
         dueDate.classList.add("due-date");
         todoDiv.appendChild(dueDate);       //adds due date into todo object
@@ -132,7 +140,7 @@ function addTodo(event){
 function deleteCheck(event){
     const item = event.target;
 
-    if(item.classList[0] === 'delete-btn'){
+    if(item.classList[0] === 'delete-btn'){     //if delete button is clicked
         const todoToRemove = item.parentElement;
         const todoGrandparent = todoToRemove.parentElement;     //preserve parent element of to-be-deleted todo
         todoToRemove.remove();      //remove the todo item from the todo list itself
@@ -157,7 +165,7 @@ function deleteCheck(event){
 
     }
 
-    if(item.classList[0] === 'complete-btn') {
+    if(item.classList[0] === 'complete-btn') {     //if check button is clicked
         const todoToCheck = item.parentElement;
         todoToCheck.classList.toggle("completed");  //change the class name so the todo can be displayed
                                                     // as crossed out and grayed out using CSS
@@ -168,7 +176,7 @@ function deleteCheck(event){
         sortList = [];          // empty out sortedList for same reason
 
         for(var i = 0; i < iterArr.length; i++){
-            if(iterArr[i].classList[1] === "completed"){
+            if(iterArr[i].classList.contains("completed")){
                 completedArr.push({name: iterArr[i].getElementsByClassName('todo-item')[0].innerText,
                 date: parseISO(iterArr[i].getElementsByClassName('date-hold')[0].value),
                 dateOriginal: iterArr[i].getElementsByClassName('date-hold')[0].value});
@@ -179,5 +187,6 @@ function deleteCheck(event){
                 dateOriginal: iterArr[i].getElementsByClassName('date-hold')[0].value})
             }       //push all other items to sortedList
         }
+        constructList();        //re-sort the todo list
     }
 }
